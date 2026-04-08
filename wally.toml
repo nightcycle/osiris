@@ -1,0 +1,14 @@
+[package]
+name = "nightcycle/osiris"
+description = "Outrageously Strict Iris"
+version = "0.1.0"
+license = "Apache"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+include = ["src", "default.project.json", "LICENSE"]
+
+[dependencies]
+Iris = "sirmallard/iris@2.5.1"
+
+[dev-dependencies]
+UILabs = "pepeeltoro41/ui-labs@2.4.2"

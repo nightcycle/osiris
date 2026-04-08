@@ -1,0 +1,21 @@
+{
+	"name": "package",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"Packages": {
+				"$path": "Packages",
+				"package": {
+					"$path": "src"
+				}
+			},
+			"DevPackages": {
+				"$path": "DevPackages"
+			},
+			"Shared": {
+				"$path": "dev/shared"
+			}
+		}
+	}
+}
