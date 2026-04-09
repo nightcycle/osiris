@@ -28,7 +28,7 @@ Osiris.Widget.Text({
 
 I consistently forget to place this damn thing, and even when I do I always had to but `do` / `end` blocks to get the auto code formatter to not flatten out my entire tree. So instead, when the widget has children, there's a mandatory callback function which runs between the construction of the widget and the .End() call internally. Now it formats cleanly, and it even passes itself in as a parameter!
 ```luau
-Osiris.Widget.Text({Osiris.Widget.Window({
+Osiris.Widget.Window({
 	Arguments = {
 		Title = "Abc123",
 	},
