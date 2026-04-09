@@ -6,7 +6,7 @@ local Iris = require(script.Parent.Iris)
 -- Types
 export type State<V> = typeof(Iris.State((nil :: any) :: V))
 type BaseWidget = {
-	ID: any,
+	ID: string,
 	type: string,
 	lastCycleTick: number,
 	parentWidget: BaseWidget,
@@ -37,6 +37,40 @@ function toParams(args: { [string]: any? }?, states: { [string]: State<any>? }?)
 end
 -- Class
 local Module = {}
+
+Module.Disabled = Iris.Disabled
+Module.TemplateConfig = Iris.TemplateConfig
+
+setmetatable(Module, {
+	__newindex = function(self, k: string, v)
+		if k == "Disabled" then
+			Iris.Disabled = v
+			rawset(self, "Disabled", v)
+		end
+	end,
+})
+
+function Module:Connect(callback: () -> ()): () -> ()
+	return Iris:Connect(callback)
+end
+
+Module.Append = Iris.Append
+Module.ComputedState = Iris.ComputedState
+Module.ForceRefresh = Iris.ForceRefresh
+Module.Init = Iris.Init
+Module.PopConfig = Iris.PopConfig
+Module.PopId = Iris.PopId
+Module.PushConfig = Iris.PushConfig
+Module.PushId = Iris.PushId
+Module.SetFocusedWindow = Iris.SetFocusedWindow
+Module.SetNextWidgetID = Iris.SetNextWidgetID
+Module.ShowDemoWindow = Iris.ShowDemoWindow
+Module.Shutdown = Iris.Shutdown
+Module.State = Iris.State
+Module.TableState = Iris.TableState
+Module.UpdateGlobalConfig = Iris.UpdateGlobalConfig
+Module.VariableState = Iris.VariableState
+Module.WeakState = Iris.WeakState
 
 Module.Widget = {}
 
