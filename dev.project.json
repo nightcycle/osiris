@@ -12,9 +12,6 @@
 			},
 			"DevPackages": {
 				"$path": "DevPackages"
-			},
-			"Shared": {
-				"$path": "dev/shared"
 			}
 		}
 	}
