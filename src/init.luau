@@ -852,4 +852,113 @@ Module.Widget.SliderRect = function(props: SliderRectWidgetProperties): SliderRe
 	return Iris.SliderRect(toParams(props.Arguments, props.State))
 end
 
+export type SelectableWidget = BaseWidget & {
+	selected: () -> boolean,
+	unselected: () -> boolean,
+	active: () -> boolean,
+	clicked: () -> boolean,
+	rightClicked: () -> boolean,
+	doubleClicked: () -> boolean,
+	ctrlClicked: () -> boolean,
+	hovered: () -> boolean,
+}
+export type SelectableWidgetProperties<V> = {
+	Arguments: {
+		Text: string,
+		Index: V, -- index of selectable value.
+		NoClick: boolean?, -- prevents the selectable from being clicked by the user.
+	},
+	State: {
+		index: State<V>, -- a shared state between all selectables.
+	},
+}
+Module.Widget.Selectable = function<V>(props: SelectableWidgetProperties<V>): SelectableWidget
+	return Iris.Selectable(toParams(props.Arguments, props.State))
+end
+
+export type ComboWidget = BaseWidget & {
+	opened: () -> boolean,
+	closed: () -> boolean,
+	changed: () -> boolean,
+	clicked: () -> boolean,
+	hovered: () -> boolean,
+}
+export type ComboWidgetProperties = {
+	Arguments: {
+		Text: string,
+		NoButton: boolean?, -- hide the dropdown button.
+		NoPreview: boolean?, -- hide the preview field.
+	},
+	State: {
+		index: State<any>,
+		isOpened: State<boolean>?,
+	},
+}
+Module.Widget.Combo = function(props: ComboWidgetProperties, fn: (widget: ComboWidget) -> ()): ComboWidget
+	local widget = Iris.Combo(toParams(props.Arguments, props.State))
+	fn(widget)
+	Iris.End()
+	return widget
+end
+
+export type ComboArrayWidget = BaseWidget & {
+	opened: () -> boolean,
+	closed: () -> boolean,
+	clicked: () -> boolean,
+	hovered: () -> boolean,
+}
+export type ComboArrayWidgetProperties<V> = {
+	Arguments: {
+		Text: string,
+		NoButton: boolean?, -- hide the dropdown button.
+		NoPreview: boolean?, -- hide the preview field.
+	},
+	State: {
+		index: State<V>,
+		isOpened: State<boolean>?,
+	},
+	Extra: {
+		selectionArray: { V }, -- the array to generate a combo from.
+	},
+}
+Module.Widget.ComboArray = function<V>(
+	props: ComboArrayWidgetProperties<V>,
+	fn: (widget: ComboArrayWidget) -> ()
+): ComboArrayWidget
+	local widget = Iris.ComboArray(toParams(props.Arguments, props.State), props.Extra.selectionArray)
+	fn(widget)
+	Iris.End()
+	return widget
+end
+
+export type ComboEnumWidget = BaseWidget & {
+	opened: () -> boolean,
+	closed: () -> boolean,
+	clicked: () -> boolean,
+	hovered: () -> boolean,
+}
+export type ComboEnumWidgetProperties = {
+	Arguments: {
+		Text: string,
+		NoButton: boolean?, -- hide the dropdown button.
+		NoPreview: boolean?, -- hide the preview field.
+	},
+	State: {
+		index: State<EnumItem>,
+		isOpened: State<boolean>?,
+	},
+	Extra: {
+		enumType: Enum, -- the array to generate a combo from.
+	},
+}
+Module.Widget.ComboEnum = function<V>(
+	props: ComboEnumWidgetProperties,
+	fn: (widget: ComboEnumWidget) -> ()
+): ComboEnumWidget
+	local widget = Iris.ComboEnum(toParams(props.Arguments, props.State), props.Extra.enumType)
+	fn(widget)
+	Iris.End()
+	return widget
+end
+
 return Module
