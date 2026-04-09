@@ -726,6 +726,130 @@ Module.Widget.DragRect = function(props: DragRectWidgetProperties): DragRectWidg
 	return Iris.DragRect(toParams(props.Arguments, props.State))
 end
 
+export type SliderNumWidget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type SliderNumWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: number?,
+		Min: number?,
+		Max: number?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		NoButtons: boolean?, -- whether to display + and - buttons next to the input box.
+	}?,
+	State: {
+		number: State<number>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.SliderNum = function(props: SliderNumWidgetProperties): SliderNumWidget
+	return Iris.SliderNum(toParams(props.Arguments, props.State))
+end
+export type SliderVector2Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type SliderVector2WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: Vector2?,
+		Min: Vector2?,
+		Max: Vector2?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		number: State<Vector2>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.SliderVector2 = function(props: SliderVector2WidgetProperties): SliderVector2Widget
+	return Iris.SliderVector2(toParams(props.Arguments, props.State))
+end
 
+export type SliderVector3Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type SliderVector3WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: Vector3?,
+		Min: Vector3?,
+		Max: Vector3?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		number: State<Vector3>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.SliderVector3 = function(props: SliderVector3WidgetProperties): SliderVector3Widget
+	return Iris.SliderVector3(toParams(props.Arguments, props.State))
+end
+
+export type SliderUDimWidget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type SliderUDimWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: UDim?,
+		Min: UDim?,
+		Max: UDim?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+	}?,
+	State: {
+		number: State<UDim>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.SliderUDim = function(props: SliderUDimWidgetProperties): SliderUDimWidget
+	return Iris.SliderUDim(toParams(props.Arguments, props.State))
+end
+
+export type SliderUDim2Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type SliderUDim2WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: UDim2?,
+		Min: UDim2?,
+		Max: UDim2?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+	}?,
+	State: {
+		number: State<UDim2>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.SliderUDim2 = function(props: SliderUDim2WidgetProperties): SliderUDim2Widget
+	return Iris.SliderUDim2(toParams(props.Arguments, props.State))
+end
+
+export type SliderRectWidget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type SliderRectWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: Rect?,
+		Min: Rect?,
+		Max: Rect?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		number: State<Rect>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.SliderRect = function(props: SliderRectWidgetProperties): SliderRectWidget
+	return Iris.SliderRect(toParams(props.Arguments, props.State))
+end
 
 return Module
