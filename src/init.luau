@@ -1019,4 +1019,37 @@ Module.Widget.PlotHistogram = function(props: PlotHistogramWidgetProperties): Pl
 	return Iris.PlotHistogram(toParams(props.Arguments, props.State))
 end
 
+export type TableWidget = BaseWidget & {
+	hovered: () -> boolean,
+	NextColumn: () -> (),
+	NextRow: () -> (),
+	SetColumIndex: (index: number) -> (),
+	SetRowIndex: (index: number) -> (),
+	NextHeaderColumn: () -> (),
+	SetHeaderColumnIndex: (index: number) -> (),
+	SetColumnWidth: (index: number, width: number) -> (),
+}
+export type TableWidgetProperties = {
+	Arguments: {
+		NumColumns: number, -- number of columns in the table, cannot be changed
+		Header: boolean?, -- display a header row for each column
+		RowBackground: boolean?, -- alternating row background colours
+		OuterBorders: boolean?, -- outer border on the entire table
+		InnerBorders: boolean?, -- inner bordres on the entire table
+		Resizable: boolean?, -- the columns can be resized by dragging or state
+		FixedWidth: boolean?, -- columns takes up a fixed pixel width, rather than a proportion of the total available
+		ProportionalWidth: boolean?, -- minimises the width of each column individually
+		LimitTableWidth: boolean?, -- when a fixed width, cut of any unused space
+	},
+	State: {
+		widths: State<{ number }>?, -- the widths of each column if Resizable
+	}?,
+}
+Module.Widget.Table = function(props: TableWidgetProperties, fn: (widget: TabBarWidget) -> ()): TableWidget
+	local widget = Iris.Table(toParams(props.Arguments, props.State))
+	fn(widget)
+	Iris.End()
+	return widget
+end
+
 return Module
