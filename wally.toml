@@ -1,6 +1,6 @@
 [package]
 name = "nightcycle/osiris"
-description = "Outrageously Strict Iris"
+description = "Opinionated Strict Iris"
 version = "0.1.0"
 license = "Apache"
 registry = "https://github.com/UpliftGames/wally-index"
