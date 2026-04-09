@@ -961,4 +961,62 @@ Module.Widget.ComboEnum = function<V>(
 	return widget
 end
 
+export type ProgressBarWidget = BaseWidget & {
+	hovered: () -> boolean,
+	changed: () -> boolean,
+}
+export type ProgressBarWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Format: string?, -- optional to override with a custom progress such as `29/54`
+	}?,
+	State: {
+		progress: State<number>?,
+	}?,
+}
+Module.Widget.ProgressBar = function(props: ProgressBarWidgetProperties): ProgressBarWidget
+	return Iris.ProgressBar(toParams(props.Arguments, props.State))
+end
+
+export type PlotLinesWidget = BaseWidget & {
+	hovered: () -> boolean,
+}
+export type PlotLinesWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Height: number?,
+		Min: number?, -- Iris will use the minimum value from the values
+		Max: number?, -- Iris will use the maximum value from the values
+		TextOverlay: string?,
+	}?,
+	State: {
+		values: State<{ number }>?,
+		hovered: State<{ number }>?, -- read-only property
+	}?,
+}
+Module.Widget.PlotLines = function(props: PlotLinesWidgetProperties): PlotLinesWidget
+	return Iris.PlotLines(toParams(props.Arguments, props.State))
+end
+
+export type PlotHistogramWidget = BaseWidget & {
+	hovered: () -> boolean,
+}
+export type PlotHistogramWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Height: number?,
+		Min: number?, -- Iris will use the minimum value from the values
+		Max: number?, -- Iris will use the maximum value from the values
+		TextOverlay: string?,
+		BaseLine: number?, -- by default, blocks swap side at 0
+	}?,
+	State: {
+		values: State<{ number }>?,
+		hovered: State<{ number }>?, -- read-only property
+	}?,
+}
+Module.Widget.PlotHistogram = function(props: PlotHistogramWidgetProperties): PlotHistogramWidget
+	return Iris.PlotHistogram(toParams(props.Arguments, props.State))
+end
+
 return Module
