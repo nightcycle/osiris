@@ -215,7 +215,7 @@ Module.Widget.InputText = function(
 		}?,
 	}
 ): InputTextWidget
-	return Iris.InputTextWidget(toParams(props.Arguments, props.States))
+	return Iris.InputText(toParams(props.Arguments, props.States))
 end
 
 export type SeparatorTextWidget = BaseWidget & {}
@@ -224,10 +224,10 @@ Module.Widget.SeparatorText = function(props: {
 		Text: string,
 	},
 }): SeparatorTextWidget
-	return Iris.InputTextWidget(toParams(props.Arguments))
+	return Iris.SeparatorText(toParams(props.Arguments))
 end
 
-export type Text = BaseWidget & {
+export type TextWidget = BaseWidget & {
 	hovered: () -> boolean,
 }
 Module.Widget.Text = function(
@@ -239,8 +239,70 @@ Module.Widget.Text = function(
 			RichText: boolean?, -- enable RichText. If not specified, then equal to the config
 		},
 	}
-): SeparatorTextWidget
-	return Iris.InputTextWidget(toParams(props.Arguments))
+): TextWidget
+	return Iris.Text(toParams(props.Arguments))
 end
+
+export type ButtonWidget = BaseWidget & {
+	clicked: () -> boolean,
+	rightClicked: () -> boolean,
+	doubleClicked: () -> boolean,
+	ctrlClicked: () -> boolean, -- when the control key is down and clicked.
+	hovered: () -> boolean,
+}
+Module.Widget.Button = function(props: {
+	Arguments: {
+		Text: string,
+		Size: UDim2?,
+	},
+}): ButtonWidget
+	return Iris.Button(toParams(props.Arguments))
+end
+
+export type SmallButtonWidget = ButtonWidget
+
+Module.Widget.SmallButton = function(props: {
+	Arguments: {
+		Text: string,
+		Size: UDim2?,
+	},
+}): SmallButtonWidget
+	return Iris.SmallButton(toParams(props.Arguments))
+end
+
+export type CheckboxWidget = BaseWidget & {
+	checked: () -> boolean, -- once when checked.
+	unchecked: () -> boolean, -- once when unchecked.
+	hovered: () -> boolean,
+}
+Module.Widget.Checkbox = function(props: {
+	Arguments: {
+		Text: string,
+	},
+	State: {
+		isChecked: State<boolean>?,
+	}?,
+}): CheckboxWidget
+	return Iris.Checkbox(toParams(props.Arguments, props.State))
+end
+
+export type RadioButtonWidget<V> = BaseWidget & {
+    selected: () -> boolean,
+    unselected: () -> boolean,
+    active: () -> boolean, -- if the state index equals the RadioButton's index.
+    hovered: () -> boolean
+}
+Module.Widget.RadioButton = function<V>(props: {
+	Arguments: {
+		Text: string,
+		Index: V,
+	},
+	State: {
+		index: State<V>?,
+	}?,
+}): RadioButtonWidget<V>
+	return Iris.RadioButton(toParams(props.Arguments, props.State))
+end
+
 
 return Module
