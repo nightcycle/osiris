@@ -600,4 +600,132 @@ Module.Widget.InputColor4 = function(props: InputColor4WidgetProperties): InputC
 	return Iris.InputColor4(toParams(props.Arguments, props.State))
 end
 
+export type DragNumWidget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type DragNumWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: number?,
+		Min: number?,
+		Max: number?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		NoButtons: boolean?, -- whether to display + and - buttons next to the input box.
+	}?,
+	State: {
+		number: State<number>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.DragNum = function(props: DragNumWidgetProperties): DragNumWidget
+	return Iris.DragNum(toParams(props.Arguments, props.State))
+end
+
+export type DragVector2Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type DragVector2WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: Vector2?,
+		Min: Vector2?,
+		Max: Vector2?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		number: State<Vector2>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.DragVector2 = function(props: DragVector2WidgetProperties): DragVector2Widget
+	return Iris.DragVector2(toParams(props.Arguments, props.State))
+end
+export type DragVector3Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type DragVector3WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: Vector3?,
+		Min: Vector3?,
+		Max: Vector3?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		number: State<Vector3>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.DragVector3 = function(props: DragVector3WidgetProperties): DragVector3Widget
+	return Iris.DragVector3(toParams(props.Arguments, props.State))
+end
+
+export type DragUDimWidget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type DragUDimWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: UDim?,
+		Min: UDim?,
+		Max: UDim?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+	}?,
+	State: {
+		number: State<UDim>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.DragUDim = function(props: DragUDimWidgetProperties): DragUDimWidget
+	return Iris.DragUDim(toParams(props.Arguments, props.State))
+end
+
+export type DragUDim2Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type DragUDim2WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: UDim2?,
+		Min: UDim2?,
+		Max: UDim2?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+	}?,
+	State: {
+		number: State<UDim2>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.DragUDim2 = function(props: DragUDim2WidgetProperties): DragUDim2Widget
+	return Iris.DragUDim2(toParams(props.Arguments, props.State))
+end
+
+export type DragRectWidget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type DragRectWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: Rect?,
+		Min: Rect?,
+		Max: Rect?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		number: State<Rect>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.DragRect = function(props: DragRectWidgetProperties): DragRectWidget
+	return Iris.DragRect(toParams(props.Arguments, props.State))
+end
+
+
+
 return Module
