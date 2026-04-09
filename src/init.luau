@@ -18,11 +18,12 @@ type BaseWidget = {
 -- Variables
 -- References
 -- Private Functions
-function toParams(args: { [string]: any? }?, states: { [string]: State<any>? }?): ({ any }, { [any]: any }?)
+function toParams(key: string, args: { [string]: any? }?, states: { [string]: State<any>? }?): ({ any }, { [any]: any }?)
 	local outArgs: { [any]: any } = {}
 	if args then
-		for k, symbol in Iris.Args.Window do
-			outArgs[symbol] = outArgs[k]
+		assert(Iris.Args[key], `bad args for "{key}"`)
+		for k, symbol in Iris.Args[key] do
+			outArgs[symbol] = args[k]
 		end
 	end
 	local stateCount = 0
@@ -40,15 +41,6 @@ local Module = {}
 
 Module.Disabled = Iris.Disabled
 Module.TemplateConfig = Iris.TemplateConfig
-
-setmetatable(Module, {
-	__newindex = function(self, k: string, v)
-		if k == "Disabled" then
-			Iris.Disabled = v
-			rawset(self, "Disabled", v)
-		end
-	end,
-})
 
 function Module:Connect(callback: () -> ()): () -> ()
 	return Iris:Connect(callback)
@@ -103,7 +95,7 @@ export type WindowWidgetProperties = {
 	}?,
 }
 Module.Widget.Window = function(props: WindowWidgetProperties, fn: (widget: WindowWidget) -> ()): WindowWidget
-	local widget = Iris.Window(toParams(props.Arguments, props.States))
+	local widget = Iris.Window(toParams("Window", props.Arguments, props.States))
 	fn(widget)
 	Iris.End()
 	return widget
@@ -116,7 +108,7 @@ export type TooltipWidgetProperties = {
 	},
 }
 Module.Widget.Tooltip = function(props: TooltipWidgetProperties): TooltipWidget
-	return Iris.Tooltip(toParams(props.Arguments))
+	return Iris.Tooltip(toParams("Tooltip", props.Arguments))
 end
 
 export type MenuBarWidget = BaseWidget & {
@@ -147,7 +139,7 @@ export type MenuWidgetProperties = {
 	}?,
 }
 Module.Widget.Menu = function(props: MenuWidgetProperties, fn: (widget: MenuWidget) -> ()): MenuWidget
-	local widget = Iris.Menu(toParams(props.Arguments, props.States))
+	local widget = Iris.Menu(toParams("Menu", props.Arguments, props.States))
 	fn(widget)
 	Iris.End()
 	return widget
@@ -165,7 +157,7 @@ export type MenuItemWidgetProperties = {
 	},
 }
 Module.Widget.MenuItem = function(props: MenuItemWidgetProperties): MenuItemWidget
-	return Iris.MenuItem(toParams(props.Arguments))
+	return Iris.MenuItem(toParams("MenuItem", props.Arguments))
 end
 
 export type MenuToggleWidget = BaseWidget & {
@@ -184,7 +176,7 @@ export type MenuToggleWidgetProperties = {
 	}?,
 }
 Module.Widget.MenuToggle = function(props: MenuToggleWidgetProperties): MenuItemWidget
-	return Iris.MenuToggle(toParams(props.Arguments))
+	return Iris.MenuToggle(toParams("MenuToggle", props.Arguments))
 end
 
 export type SeparatorWidget = BaseWidget & {}
@@ -200,7 +192,7 @@ export type IndentWidgetProperties = {
 	}?,
 }
 Module.Widget.Indent = function(props: IndentWidgetProperties, fn: (widget: IndentWidget) -> ()): IndentWidget
-	local widget = Iris.Indent(toParams(props.Arguments))
+	local widget = Iris.Indent(toParams("Indent", props.Arguments))
 	fn(widget)
 	Iris.End()
 	return widget
@@ -215,7 +207,7 @@ export type SameLineWidgetProperties = {
 	}?,
 }
 Module.Widget.SameLine = function(props: SameLineWidgetProperties, fn: (widget: SameLineWidget) -> ()): SameLineWidget
-	local widget = Iris.SameLine(toParams(props.Arguments))
+	local widget = Iris.SameLine(toParams("SameLine", props.Arguments))
 	fn(widget)
 	Iris.End()
 	return widget
@@ -246,7 +238,7 @@ export type InputTextWidgetProperties = {
 	}?,
 }
 Module.Widget.InputText = function(props: InputTextWidgetProperties): InputTextWidget
-	return Iris.InputText(toParams(props.Arguments, props.States))
+	return Iris.InputText(toParams("InputText", props.Arguments, props.States))
 end
 
 export type SeparatorTextWidget = BaseWidget & {}
@@ -256,7 +248,7 @@ export type SeparatorTextWidgetProperties = {
 	},
 }
 Module.Widget.SeparatorText = function(props: SeparatorTextWidgetProperties): SeparatorTextWidget
-	return Iris.SeparatorText(toParams(props.Arguments))
+	return Iris.SeparatorText(toParams("SeparatorText", props.Arguments))
 end
 
 export type TextWidget = BaseWidget & {
@@ -271,7 +263,7 @@ export type TextWidgetProperties = {
 	},
 }
 Module.Widget.Text = function(props: TextWidgetProperties): TextWidget
-	return Iris.Text(toParams(props.Arguments))
+	return Iris.Text(toParams("Text", props.Arguments))
 end
 
 export type ButtonWidget = BaseWidget & {
@@ -288,14 +280,14 @@ export type ButtonWidgetProperties = {
 	},
 }
 Module.Widget.Button = function(props: ButtonWidgetProperties): ButtonWidget
-	return Iris.Button(toParams(props.Arguments))
+	return Iris.Button(toParams("Button", props.Arguments))
 end
 
 export type SmallButtonWidget = ButtonWidget
 export type SmallButtonWidgetProperties = ButtonWidgetProperties
 
 Module.Widget.SmallButton = function(props: SmallButtonWidgetProperties): SmallButtonWidget
-	return Iris.SmallButton(toParams(props.Arguments))
+	return Iris.SmallButton(toParams("SmallButton", props.Arguments))
 end
 
 export type CheckboxWidget = BaseWidget & {
@@ -312,7 +304,7 @@ export type CheckboxWidgetProperties = {
 	}?,
 }
 Module.Widget.Checkbox = function(props: CheckboxWidgetProperties): CheckboxWidget
-	return Iris.Checkbox(toParams(props.Arguments, props.State))
+	return Iris.Checkbox(toParams("Checkbox", props.Arguments, props.State))
 end
 
 export type RadioButtonWidget<V> = BaseWidget & {
@@ -331,7 +323,7 @@ export type RadioButtonProperties<V> = {
 	}?,
 }
 Module.Widget.RadioButton = function<V>(props: RadioButtonProperties<V>): RadioButtonWidget<V>
-	return Iris.RadioButton(toParams(props.Arguments, props.State))
+	return Iris.RadioButton(toParams("RadioButton", props.Arguments, props.State))
 end
 
 export type TreeWidget = BaseWidget & {
@@ -351,7 +343,7 @@ export type TreeProperties = {
 	}?,
 }
 Module.Widget.Tree = function(props: TreeProperties, fn: (widget: TreeWidget) -> ()): TreeWidget
-	local widget = Iris.Tree(toParams(props.Arguments, props.States))
+	local widget = Iris.Tree(toParams("Tree", props.Arguments, props.States))
 	fn(widget)
 	Iris.End()
 	return widget
@@ -375,7 +367,7 @@ Module.Widget.CollapsingHeader = function(
 	props: CollapsingHeaderProperties,
 	fn: (widget: CollapsingHeaderWidget) -> ()
 ): CollapsingHeaderWidget
-	local widget = Iris.CollapsingHeader(toParams(props.Arguments, props.States))
+	local widget = Iris.CollapsingHeader(toParams("CollapsingHeader", props.Arguments, props.States))
 	fn(widget)
 	Iris.End()
 	return widget
@@ -396,7 +388,7 @@ export type TabBarWidgetProperties = {
 	}?,
 }
 Module.Widget.TabBar = function(props: TabBarWidgetProperties, fn: (widget: TabBarWidget) -> ()): TabBarWidget
-	local widget = Iris.TabBar(toParams(nil, props.States))
+	local widget = Iris.TabBar(toParams("TabBar", nil, props.States))
 	fn(widget)
 	Iris.End()
 	return widget
@@ -421,7 +413,7 @@ export type TabWidgetProperties = {
 	}?,
 }
 Module.Widget.Tab = function(props: TabWidgetProperties): TabWidget
-	return Iris.Tab(toParams(props.Arguments, props.States))
+	return Iris.Tab(toParams("Tab", props.Arguments, props.States))
 end
 
 export type ImageWidget = BaseWidget & {
@@ -440,7 +432,7 @@ export type ImageWidgetProperties = {
 	},
 }
 Module.Widget.Image = function(props: ImageWidgetProperties): ImageWidget
-	return Iris.Image(toParams(props.Arguments))
+	return Iris.Image(toParams("Image", props.Arguments))
 end
 
 export type ImageButtonWidget = BaseWidget & {
@@ -463,7 +455,7 @@ export type ImageButtonWidgetProperties = {
 	},
 }
 Module.Widget.ImageButton = function(props: ImageButtonWidgetProperties): ImageButtonWidget
-	return Iris.ImageButton(toParams(props.Arguments))
+	return Iris.ImageButton(toParams("ImageButton", props.Arguments))
 end
 
 export type InputNumWidget = BaseWidget & {
@@ -485,7 +477,7 @@ export type InputNumWidgetProperties = {
 	}?,
 }
 Module.Widget.InputNum = function(props: InputNumWidgetProperties): InputNumWidget
-	return Iris.InputNum(toParams(props.Arguments, props.State))
+	return Iris.InputNum(toParams("InputNum", props.Arguments, props.State))
 end
 
 export type InputVector2Widget = BaseWidget & {
@@ -506,7 +498,7 @@ export type InputVector2WidgetProperties = {
 	}?,
 }
 Module.Widget.InputVector2 = function(props: InputVector2WidgetProperties): InputVector2Widget
-	return Iris.InputVector2(toParams(props.Arguments, props.State))
+	return Iris.InputVector2(toParams("InputVector2", props.Arguments, props.State))
 end
 
 export type InputVector3Widget = BaseWidget & {
@@ -527,7 +519,7 @@ export type InputVector3WidgetProperties = {
 	}?,
 }
 Module.Widget.InputVector3 = function(props: InputVector3WidgetProperties): InputVector3Widget
-	return Iris.InputVector3(toParams(props.Arguments, props.State))
+	return Iris.InputVector3(toParams("InputVector3", props.Arguments, props.State))
 end
 
 export type InputUDimWidget = BaseWidget & {
@@ -548,7 +540,7 @@ export type InputUDimWidgetProperties = {
 	}?,
 }
 Module.Widget.InputUDim = function(props: InputUDimWidgetProperties): InputUDimWidget
-	return Iris.InputUDim(toParams(props.Arguments, props.State))
+	return Iris.InputUDim(toParams("InputUDim", props.Arguments, props.State))
 end
 
 export type InputUDim2Widget = BaseWidget & {
@@ -569,7 +561,7 @@ export type InputUDim2WidgetProperties = {
 	}?,
 }
 Module.Widget.InputUDim2 = function(props: InputUDim2WidgetProperties): InputUDim2Widget
-	return Iris.InputUDim2(toParams(props.Arguments, props.State))
+	return Iris.InputUDim2(toParams("InputUDim2", props.Arguments, props.State))
 end
 
 export type InputRectWidget = BaseWidget & {
@@ -590,7 +582,7 @@ export type InputRectWidgetProperties = {
 	}?,
 }
 Module.Widget.InputRect = function(props: InputRectWidgetProperties): InputRectWidget
-	return Iris.InputRect(toParams(props.Arguments, props.State))
+	return Iris.InputRect(toParams("InputRect", props.Arguments, props.State))
 end
 
 export type InputColor3Widget = BaseWidget & {
@@ -610,7 +602,7 @@ export type InputColor3WidgetProperties = {
 	}?,
 }
 Module.Widget.InputColor3 = function(props: InputColor3WidgetProperties): InputColor3Widget
-	return Iris.InputColor3(toParams(props.Arguments, props.State))
+	return Iris.InputColor3(toParams("InputColor3", props.Arguments, props.State))
 end
 
 export type InputColor4Widget = BaseWidget & {
@@ -631,7 +623,7 @@ export type InputColor4WidgetProperties = {
 	}?,
 }
 Module.Widget.InputColor4 = function(props: InputColor4WidgetProperties): InputColor4Widget
-	return Iris.InputColor4(toParams(props.Arguments, props.State))
+	return Iris.InputColor4(toParams("InputColor4", props.Arguments, props.State))
 end
 
 export type DragNumWidget = BaseWidget & {
@@ -653,7 +645,7 @@ export type DragNumWidgetProperties = {
 	}?,
 }
 Module.Widget.DragNum = function(props: DragNumWidgetProperties): DragNumWidget
-	return Iris.DragNum(toParams(props.Arguments, props.State))
+	return Iris.DragNum(toParams("DragNum", props.Arguments, props.State))
 end
 
 export type DragVector2Widget = BaseWidget & {
@@ -674,7 +666,7 @@ export type DragVector2WidgetProperties = {
 	}?,
 }
 Module.Widget.DragVector2 = function(props: DragVector2WidgetProperties): DragVector2Widget
-	return Iris.DragVector2(toParams(props.Arguments, props.State))
+	return Iris.DragVector2(toParams("DragVector2", props.Arguments, props.State))
 end
 export type DragVector3Widget = BaseWidget & {
 	numberChanged: () -> boolean,
@@ -694,7 +686,7 @@ export type DragVector3WidgetProperties = {
 	}?,
 }
 Module.Widget.DragVector3 = function(props: DragVector3WidgetProperties): DragVector3Widget
-	return Iris.DragVector3(toParams(props.Arguments, props.State))
+	return Iris.DragVector3(toParams("DragVector3", props.Arguments, props.State))
 end
 
 export type DragUDimWidget = BaseWidget & {
@@ -715,7 +707,7 @@ export type DragUDimWidgetProperties = {
 	}?,
 }
 Module.Widget.DragUDim = function(props: DragUDimWidgetProperties): DragUDimWidget
-	return Iris.DragUDim(toParams(props.Arguments, props.State))
+	return Iris.DragUDim(toParams("DragUDim", props.Arguments, props.State))
 end
 
 export type DragUDim2Widget = BaseWidget & {
@@ -736,7 +728,7 @@ export type DragUDim2WidgetProperties = {
 	}?,
 }
 Module.Widget.DragUDim2 = function(props: DragUDim2WidgetProperties): DragUDim2Widget
-	return Iris.DragUDim2(toParams(props.Arguments, props.State))
+	return Iris.DragUDim2(toParams("DragUDim2", props.Arguments, props.State))
 end
 
 export type DragRectWidget = BaseWidget & {
@@ -757,7 +749,7 @@ export type DragRectWidgetProperties = {
 	}?,
 }
 Module.Widget.DragRect = function(props: DragRectWidgetProperties): DragRectWidget
-	return Iris.DragRect(toParams(props.Arguments, props.State))
+	return Iris.DragRect(toParams("DragRect", props.Arguments, props.State))
 end
 
 export type SliderNumWidget = BaseWidget & {
@@ -779,7 +771,7 @@ export type SliderNumWidgetProperties = {
 	}?,
 }
 Module.Widget.SliderNum = function(props: SliderNumWidgetProperties): SliderNumWidget
-	return Iris.SliderNum(toParams(props.Arguments, props.State))
+	return Iris.SliderNum(toParams("SliderNum", props.Arguments, props.State))
 end
 export type SliderVector2Widget = BaseWidget & {
 	numberChanged: () -> boolean,
@@ -799,7 +791,7 @@ export type SliderVector2WidgetProperties = {
 	}?,
 }
 Module.Widget.SliderVector2 = function(props: SliderVector2WidgetProperties): SliderVector2Widget
-	return Iris.SliderVector2(toParams(props.Arguments, props.State))
+	return Iris.SliderVector2(toParams("SliderVcetor2", props.Arguments, props.State))
 end
 
 export type SliderVector3Widget = BaseWidget & {
@@ -820,7 +812,7 @@ export type SliderVector3WidgetProperties = {
 	}?,
 }
 Module.Widget.SliderVector3 = function(props: SliderVector3WidgetProperties): SliderVector3Widget
-	return Iris.SliderVector3(toParams(props.Arguments, props.State))
+	return Iris.SliderVector3(toParams("SliderVector3", props.Arguments, props.State))
 end
 
 export type SliderUDimWidget = BaseWidget & {
@@ -841,7 +833,7 @@ export type SliderUDimWidgetProperties = {
 	}?,
 }
 Module.Widget.SliderUDim = function(props: SliderUDimWidgetProperties): SliderUDimWidget
-	return Iris.SliderUDim(toParams(props.Arguments, props.State))
+	return Iris.SliderUDim(toParams("SliderUDim", props.Arguments, props.State))
 end
 
 export type SliderUDim2Widget = BaseWidget & {
@@ -862,7 +854,7 @@ export type SliderUDim2WidgetProperties = {
 	}?,
 }
 Module.Widget.SliderUDim2 = function(props: SliderUDim2WidgetProperties): SliderUDim2Widget
-	return Iris.SliderUDim2(toParams(props.Arguments, props.State))
+	return Iris.SliderUDim2(toParams("SliderUDim2", props.Arguments, props.State))
 end
 
 export type SliderRectWidget = BaseWidget & {
@@ -883,7 +875,7 @@ export type SliderRectWidgetProperties = {
 	}?,
 }
 Module.Widget.SliderRect = function(props: SliderRectWidgetProperties): SliderRectWidget
-	return Iris.SliderRect(toParams(props.Arguments, props.State))
+	return Iris.SliderRect(toParams("SliderRect", props.Arguments, props.State))
 end
 
 export type SelectableWidget = BaseWidget & {
@@ -907,7 +899,7 @@ export type SelectableWidgetProperties<V> = {
 	},
 }
 Module.Widget.Selectable = function<V>(props: SelectableWidgetProperties<V>): SelectableWidget
-	return Iris.Selectable(toParams(props.Arguments, props.State))
+	return Iris.Selectable(toParams("Selectable", props.Arguments, props.State))
 end
 
 export type ComboWidget = BaseWidget & {
@@ -929,7 +921,7 @@ export type ComboWidgetProperties = {
 	},
 }
 Module.Widget.Combo = function(props: ComboWidgetProperties, fn: (widget: ComboWidget) -> ()): ComboWidget
-	local widget = Iris.Combo(toParams(props.Arguments, props.State))
+	local widget = Iris.Combo(toParams("Combo", props.Arguments, props.State))
 	fn(widget)
 	Iris.End()
 	return widget
@@ -959,7 +951,7 @@ Module.Widget.ComboArray = function<V>(
 	props: ComboArrayWidgetProperties<V>,
 	fn: (widget: ComboArrayWidget) -> ()
 ): ComboArrayWidget
-	local widget = Iris.ComboArray(toParams(props.Arguments, props.State), props.Extra.selectionArray)
+	local widget = Iris.ComboArray(toParams("ComboArray", props.Arguments, props.State), props.Extra.selectionArray)
 	fn(widget)
 	Iris.End()
 	return widget
@@ -989,7 +981,7 @@ Module.Widget.ComboEnum = function<V>(
 	props: ComboEnumWidgetProperties,
 	fn: (widget: ComboEnumWidget) -> ()
 ): ComboEnumWidget
-	local widget = Iris.ComboEnum(toParams(props.Arguments, props.State), props.Extra.enumType)
+	local widget = Iris.ComboEnum(toParams("ComboEnum", props.Arguments, props.State), props.Extra.enumType)
 	fn(widget)
 	Iris.End()
 	return widget
@@ -1009,7 +1001,7 @@ export type ProgressBarWidgetProperties = {
 	}?,
 }
 Module.Widget.ProgressBar = function(props: ProgressBarWidgetProperties): ProgressBarWidget
-	return Iris.ProgressBar(toParams(props.Arguments, props.State))
+	return Iris.ProgressBar(toParams("ProgressBar", props.Arguments, props.State))
 end
 
 export type PlotLinesWidget = BaseWidget & {
@@ -1029,7 +1021,7 @@ export type PlotLinesWidgetProperties = {
 	}?,
 }
 Module.Widget.PlotLines = function(props: PlotLinesWidgetProperties): PlotLinesWidget
-	return Iris.PlotLines(toParams(props.Arguments, props.State))
+	return Iris.PlotLines(toParams("PlotLines", props.Arguments, props.State))
 end
 
 export type PlotHistogramWidget = BaseWidget & {
@@ -1050,7 +1042,7 @@ export type PlotHistogramWidgetProperties = {
 	}?,
 }
 Module.Widget.PlotHistogram = function(props: PlotHistogramWidgetProperties): PlotHistogramWidget
-	return Iris.PlotHistogram(toParams(props.Arguments, props.State))
+	return Iris.PlotHistogram(toParams("PlotHistogram", props.Arguments, props.State))
 end
 
 export type TableWidget = BaseWidget & {
@@ -1080,10 +1072,19 @@ export type TableWidgetProperties = {
 	}?,
 }
 Module.Widget.Table = function(props: TableWidgetProperties, fn: (widget: TabBarWidget) -> ()): TableWidget
-	local widget = Iris.Table(toParams(props.Arguments, props.State))
+	local widget = Iris.Table(toParams("Table", props.Arguments, props.State))
 	fn(widget)
 	Iris.End()
 	return widget
 end
+
+setmetatable(Module, {
+	__newindex = function(self, k: string, v)
+		if k == "Disabled" then
+			Iris.Disabled = v
+			rawset(self, "Disabled", v)
+		end
+	end,
+})
 
 return Module
