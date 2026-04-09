@@ -23,6 +23,7 @@ Osiris.Widget.Text({
 	}
 })
 ```
+It also returns the handle with widget specific type annotations if you want to use events.
 
 ### Death to .End()
 
@@ -46,7 +47,7 @@ Osiris.Widget.Window({
 	})
 end)
 ```
-I'll be honest though, I usually just assign the internal parameter to `_`
+I'll be honest though, I usually just assign the internal parameter to `_`.
 
 ## Goals
 
