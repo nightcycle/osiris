@@ -389,4 +389,215 @@ export type TabWidgetProperties = {
 Module.Widget.Tab = function(props: TabWidgetProperties): TabWidget
 	return Iris.Tab(toParams(props.Arguments, props.States))
 end
+
+export type ImageWidget = BaseWidget & {
+	hovered: () -> boolean,
+}
+export type ImageWidgetProperties = {
+	Arguments: {
+		Image: string, -- the texture asset id
+		Size: UDim2,
+		Rect: Rect?, -- Rect structure which is used to determine the offset or size. An empty, zeroed rect is equivalent to nil
+		ScaleType: Enum.ScaleType?, -- used to determine whether the TileSize, SliceCenter and SliceScale arguments are used
+		ResampleMode: Enum.ResamplerMode?,
+		TileSize: UDim2?, -- only used if the ScaleType is set to Tile
+		SliceCenter: Rect?, -- only used if the ScaleType is set to Slice
+		SliceScale: number?, -- only used if the ScaleType is set to Slice
+	},
+}
+Module.Widget.Image = function(props: ImageWidgetProperties): ImageWidget
+	return Iris.Image(toParams(props.Arguments))
+end
+
+export type ImageButtonWidget = BaseWidget & {
+	clicked: () -> boolean,
+	rightClicked: () -> boolean,
+	doubleClicked: () -> boolean,
+	ctrlClicked: () -> boolean, -- when the control key is down and clicked.
+	hovered: () -> boolean,
+}
+export type ImageButtonWidgetProperties = {
+	Arguments: {
+		Image: string, -- the texture asset id
+		Size: UDim2,
+		Rect: Rect?, -- Rect structure which is used to determine the offset or size. An empty, zeroed rect is equivalent to nil
+		ScaleType: Enum.ScaleType?, -- used to determine whether the TileSize, SliceCenter and SliceScale arguments are used
+		ResampleMode: Enum.ResamplerMode?,
+		TileSize: UDim2?, -- only used if the ScaleType is set to Tile
+		SliceCenter: Rect?, -- only used if the ScaleType is set to Slice
+		SliceScale: number?, -- only used if the ScaleType is set to Slice
+	},
+}
+Module.Widget.ImageButton = function(props: ImageButtonWidgetProperties): ImageButtonWidget
+	return Iris.ImageButton(toParams(props.Arguments))
+end
+
+export type InputNumWidget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type InputNumWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: number?,
+		Min: number?,
+		Max: number?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		NoButtons: boolean?, -- whether to display + and - buttons next to the input box.
+	}?,
+	State: {
+		number: State<number>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.InputNum = function(props: InputNumWidgetProperties): InputNumWidget
+	return Iris.InputNum(toParams(props.Arguments, props.State))
+end
+
+export type InputVector2Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type InputVector2WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: Vector2?,
+		Min: Vector2?,
+		Max: Vector2?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		number: State<Vector2>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.InputVector2 = function(props: InputVector2WidgetProperties): InputVector2Widget
+	return Iris.InputVector2(toParams(props.Arguments, props.State))
+end
+
+export type InputVector3Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type InputVector3WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: Vector3?,
+		Min: Vector3?,
+		Max: Vector3?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		number: State<Vector3>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.InputVector3 = function(props: InputVector3WidgetProperties): InputVector3Widget
+	return Iris.InputVector3(toParams(props.Arguments, props.State))
+end
+
+export type InputUDimWidget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type InputUDimWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: UDim?,
+		Min: UDim?,
+		Max: UDim?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+	}?,
+	State: {
+		number: State<UDim>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.InputUDim = function(props: InputUDimWidgetProperties): InputUDimWidget
+	return Iris.InputUDim(toParams(props.Arguments, props.State))
+end
+
+export type InputUDim2Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type InputUDim2WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: UDim2?,
+		Min: UDim2?,
+		Max: UDim2?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+	}?,
+	State: {
+		number: State<UDim2>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.InputUDim2 = function(props: InputUDim2WidgetProperties): InputUDim2Widget
+	return Iris.InputUDim2(toParams(props.Arguments, props.State))
+end
+
+export type InputRectWidget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type InputRectWidgetProperties = {
+	Arguments: {
+		Text: string?,
+		Increment: Rect?,
+		Min: Rect?,
+		Max: Rect?,
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		number: State<Rect>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.InputRect = function(props: InputRectWidgetProperties): InputRectWidget
+	return Iris.InputRect(toParams(props.Arguments, props.State))
+end
+
+export type InputColor3Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type InputColor3WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		UseFloats: boolean?, -- constrain the values between floats 0 and 1 or integers 0 and 255.
+		UseHSV: boolean?, -- input using HSV instead.
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		color: State<Color3>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.InputColor3 = function(props: InputColor3WidgetProperties): InputColor3Widget
+	return Iris.InputColor3(toParams(props.Arguments, props.State))
+end
+
+export type InputColor4Widget = BaseWidget & {
+	numberChanged: () -> boolean,
+	hovered: () -> boolean,
+}
+export type InputColor4WidgetProperties = {
+	Arguments: {
+		Text: string?,
+		UseFloats: boolean?, -- constrain the values between floats 0 and 1 or integers 0 and 255.
+		UseHSV: boolean?, -- input using HSV instead.
+		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+	}?,
+	State: {
+		color: State<Color3>?,
+		transparency: State<number>?,
+		editingText: State<boolean>?,
+	}?,
+}
+Module.Widget.InputColor4 = function(props: InputColor4WidgetProperties): InputColor4Widget
+	return Iris.InputColor4(toParams(props.Arguments, props.State))
+end
+
 return Module
