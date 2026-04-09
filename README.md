@@ -36,7 +36,7 @@ Osiris.Widget.Window({
 	State = {
 		isOpened = isOpenState,
 	},
-}, function(windowWidgetHandle)
+}, function(windowWidget)
 	Osiris.Widget.Text({
 		Arguments = {
 			Text = "Hello!",
