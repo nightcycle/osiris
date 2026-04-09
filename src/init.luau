@@ -198,4 +198,49 @@ Module.Widget.Group = function(props: {}, fn: (widget: GroupWidget) -> ()): Grou
 	return widget
 end
 
+export type InputTextWidget = BaseWidget & {
+	textChanged: () -> boolean, -- whenever the textbox looses focus and a change was made.
+	hovered: () -> boolean,
+}
+Module.Widget.InputText = function(
+	props: {
+		Arguments: {
+			Text: string?,
+			TextHint: string?, -- a hint to display when the text box is empty.
+			ReadOnly: boolean?,
+			MultiLine: boolean?,
+		}?,
+		States: {
+			text: State<string>?,
+		}?,
+	}
+): InputTextWidget
+	return Iris.InputTextWidget(toParams(props.Arguments, props.States))
+end
+
+export type SeparatorTextWidget = BaseWidget & {}
+Module.Widget.SeparatorText = function(props: {
+	Arguments: {
+		Text: string,
+	},
+}): SeparatorTextWidget
+	return Iris.InputTextWidget(toParams(props.Arguments))
+end
+
+export type Text = BaseWidget & {
+	hovered: () -> boolean,
+}
+Module.Widget.Text = function(
+	props: {
+		Arguments: {
+			Text: string,
+			Wrapped: boolean?, -- whether the text will wrap around inside the parent container. If not specified, then equal to the config
+			Color: Color3?, -- the color of the text.
+			RichText: boolean?, -- enable RichText. If not specified, then equal to the config
+		},
+	}
+): SeparatorTextWidget
+	return Iris.InputTextWidget(toParams(props.Arguments))
+end
+
 return Module
