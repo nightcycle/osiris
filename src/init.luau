@@ -5,6 +5,15 @@ local Iris = require(script.Parent.Iris)
 -- Modules
 -- Types
 export type State<V> = typeof(Iris.State((nil :: any) :: V))
+type BaseWidget = {
+	ID: any,
+	type: string,
+	lastCycleTick: number,
+	parentWidget: BaseWidget,
+	Instance: GuiObject,
+	ZIndex: number,
+	arguments: { [string]: any },
+}
 -- Constants
 -- Variables
 -- References
@@ -29,14 +38,16 @@ end
 -- Class
 local Module = {}
 
-type WindowHandle = {
+Module.Widget = {}
+
+export type WindowWidget = BaseWidget & {
 	opened: () -> boolean, -- once when opened.
 	closed: () -> boolean, -- once when closed.
 	collapsed: () -> boolean, -- once when collapsed.
 	uncollapsed: () -> boolean, -- once when uncollapsed.
 	hovered: () -> boolean, -- fires when the mouse hovers over any of the window.
 }
-Module.Window = function(
+Module.Widget.Window = function(
 	props: {
 		Arguments: {
 			Title: string,
@@ -58,30 +69,42 @@ Module.Window = function(
 			scrollDistance: State<number>?, -- vertical scroll distance, if too short.
 		}?,
 	},
-	fn: (component: WindowHandle) -> ()
-): WindowHandle
-	local handle = Iris.Window(toParams(props.Arguments, props.States))
-	fn(handle)
+	fn: (widget: WindowWidget) -> ()
+): WindowWidget
+	local widget = Iris.Window(toParams(props.Arguments, props.States))
+	fn(widget)
 	Iris.End()
-	return handle
+	return widget
 end
 
-type TooltipHandle = {}
-Module.Tooltip = function(props: {
+export type TooltipWidget = BaseWidget & {}
+Module.Widget.Tooltip = function(props: {
 	Arguments: {
 		Text: string,
 	},
-}): TooltipHandle
+}): TooltipWidget
 	return Iris.Tooltip(toParams(props.Arguments))
 end
 
-type MenuBarHandle = {
+export type MenuBarWidget = BaseWidget & {
 	clicked: () -> boolean,
 	opened: () -> boolean, -- once when opened.
 	closed: () -> boolean, -- once when closed.
 	hovered: () -> boolean,
 }
-Module.MenuBar = function(
+Module.Widget.MenuBar = function(props: {}, fn: (widget: MenuBarWidget) -> ()): MenuBarWidget
+	local widget = Iris.MenuBar()
+	fn(widget)
+	Iris.End()
+	return widget
+end
+export type MenuWidget = BaseWidget & {
+	clicked: () -> boolean,
+	opened: () -> boolean, -- once when opened.
+	closed: () -> boolean, -- once when closed.
+	hovered: () -> boolean,
+}
+Module.Widget.Menu = function(
 	props: {
 		Arguments: {
 			Text: string,
@@ -90,12 +113,89 @@ Module.MenuBar = function(
 			isOpened: State<boolean>?, -- whether the menu is open, including any sub-menus within.
 		}?,
 	},
-	fn: (component: MenuBarHandle) -> ()
-): WindowHandle
-	local handle = Iris.MenuBar(toParams(props.Arguments, props.States))
-	fn(handle)
+	fn: (widget: MenuWidget) -> ()
+): MenuWidget
+	local widget = Iris.Menu(toParams(props.Arguments, props.States))
+	fn(widget)
 	Iris.End()
-	return handle
+	return widget
+end
+
+export type MenuItemWidget = BaseWidget & {
+	clicked: () -> boolean,
+	hovered: () -> boolean,
+}
+Module.Widget.MenuItem = function(props: {
+	Arguments: {
+		Text: string,
+		KeyCode: Enum.KeyCode?,
+		ModifierKey: Enum.KeyCode?,
+	},
+}): MenuItemWidget
+	return Iris.MenuItem(toParams(props.Arguments))
+end
+
+export type MenuToggleWidget = BaseWidget & {
+	checked: () -> boolean, -- once on check.
+	unchecked: () -> boolean, -- once on uncheck.
+	hovered: () -> boolean,
+}
+Module.Widget.MenuToggle = function(props: {
+	Arguments: {
+		Text: string,
+		KeyCode: Enum.KeyCode?,
+		ModifierKey: Enum.KeyCode?,
+	},
+	States: {
+		isChecked: State<boolean>?,
+	}?,
+}): MenuItemWidget
+	return Iris.MenuToggle(toParams(props.Arguments))
+end
+
+export type SeparatorWidget = BaseWidget & {}
+Module.Widget.Separator = function(props: {}): SeparatorWidget
+	return Iris.Separator()
+end
+
+export type IndentWidget = BaseWidget & {}
+Module.Widget.Indent = function(
+	props: {
+		Arguments: {
+			Width: number?,
+		}?,
+	},
+	fn: (widget: IndentWidget) -> ()
+): IndentWidget
+	local widget = Iris.Indent(toParams(props.Arguments))
+	fn(widget)
+	Iris.End()
+	return widget
+end
+
+export type SameLineWidget = BaseWidget & {}
+Module.Widget.SameLine = function(
+	props: {
+		Arguments: {
+			Width: number?,
+			VerticalAlignment: Enum.VerticalAlignment?,
+			HorizontalAlignment: Enum.HorizontalAlignment?,
+		}?,
+	},
+	fn: (widget: SameLineWidget) -> ()
+): SameLineWidget
+	local widget = Iris.SameLine(toParams(props.Arguments))
+	fn(widget)
+	Iris.End()
+	return widget
+end
+
+export type GroupWidget = BaseWidget & {}
+Module.Widget.Group = function(props: {}, fn: (widget: GroupWidget) -> ()): GroupWidget
+	local widget = Iris.Group()
+	fn(widget)
+	Iris.End()
+	return widget
 end
 
 return Module
