@@ -12,7 +12,7 @@ I implemented two specific changes in the pursuit of type safety and auto indent
 
 ### React / Fusion Style Property Tables
 
-While Luau is a bit flimsy with restricting the addition of unknown fields, this should at least alert you of when you're missing a mandatory field.
+No more mis-indexing fields.
 ```luau
 Osiris.Widget.Text({
 	Arguments = {
@@ -33,7 +33,7 @@ Osiris.Widget.Window({
 	Arguments = {
 		Title = "Abc123",
 	},
-	State = {
+	States = {
 		isOpened = isOpenState,
 	},
 }, function(windowWidget)
@@ -55,4 +55,4 @@ My goal is to never crash Iris again with a type error, and to have nice and cle
 
 ## Future
 
-I'll probably use this internally, I'll update it as I like. Once the next Iris version comes out I might scrap it as I know it implements some of the stuff I added here. 
+I'll probably use this internally, I'll update it as I like. Once the next Iris version comes out I might scrap it as I know it implements some of the stuff I added here.

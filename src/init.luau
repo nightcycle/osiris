@@ -89,6 +89,7 @@ export type WindowWidgetProperties = {
 		NoResize: boolean?,
 		-- NoNav: boolean?, -- unimplemented.
 		NoMenu: boolean?, -- whether the menubar will show if created.
+		[any]: never,
 	},
 	States: {
 		size: State<Vector2>?,
@@ -96,7 +97,9 @@ export type WindowWidgetProperties = {
 		isUncollapsed: State<boolean>?,
 		isOpened: State<boolean>?,
 		scrollDistance: State<number>?, -- vertical scroll distance, if too short.
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.Window = function(props: WindowWidgetProperties, fn: (widget: WindowWidget) -> ()): WindowWidget
 	local widget = Iris.Window(toParams("Window", props.Arguments, props.States))
@@ -109,7 +112,9 @@ export type TooltipWidget = BaseWidget & {}
 export type TooltipWidgetProperties = {
 	Arguments: {
 		Text: string,
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.Tooltip = function(props: TooltipWidgetProperties): TooltipWidget
 	return Iris.Tooltip(toParams("Tooltip", props.Arguments))
@@ -137,10 +142,13 @@ export type MenuWidget = BaseWidget & {
 export type MenuWidgetProperties = {
 	Arguments: {
 		Text: string,
+		[any]: never,
 	},
 	States: {
 		isOpened: State<boolean>?, -- whether the menu is open, including any sub-menus within.
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.Menu = function(props: MenuWidgetProperties, fn: (widget: MenuWidget) -> ()): MenuWidget
 	local widget = Iris.Menu(toParams("Menu", props.Arguments, props.States))
@@ -158,7 +166,9 @@ export type MenuItemWidgetProperties = {
 		Text: string,
 		KeyCode: Enum.KeyCode?,
 		ModifierKey: Enum.KeyCode?,
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.MenuItem = function(props: MenuItemWidgetProperties): MenuItemWidget
 	return Iris.MenuItem(toParams("MenuItem", props.Arguments))
@@ -174,10 +184,13 @@ export type MenuToggleWidgetProperties = {
 		Text: string,
 		KeyCode: Enum.KeyCode?,
 		ModifierKey: Enum.KeyCode?,
+		[any]: never,
 	},
 	States: {
 		isChecked: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.MenuToggle = function(props: MenuToggleWidgetProperties): MenuToggleWidget
 	return Iris.MenuToggle(toParams("MenuToggle", props.Arguments, props.States))
@@ -208,7 +221,9 @@ export type SameLineWidgetProperties = {
 		Width: number?,
 		VerticalAlignment: Enum.VerticalAlignment?,
 		HorizontalAlignment: Enum.HorizontalAlignment?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.SameLine = function(props: SameLineWidgetProperties, fn: (widget: SameLineWidget) -> ()): SameLineWidget
 	local widget = Iris.SameLine(toParams("SameLine", props.Arguments))
@@ -218,7 +233,9 @@ Module.Widget.SameLine = function(props: SameLineWidgetProperties, fn: (widget: 
 end
 
 export type GroupWidget = BaseWidget & {}
-export type GroupWidgetProperties = {}
+export type GroupWidgetProperties = {
+	[any]: never,
+}
 Module.Widget.Group = function(props: GroupWidgetProperties, fn: (widget: GroupWidget) -> ()): GroupWidget
 	local widget = Iris.Group()
 	fn(widget)
@@ -236,10 +253,13 @@ export type InputTextWidgetProperties = {
 		TextHint: string?, -- a hint to display when the text box is empty.
 		ReadOnly: boolean?,
 		MultiLine: boolean?,
+		[any]: never,
 	}?,
 	States: {
 		text: State<string>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.InputText = function(props: InputTextWidgetProperties): InputTextWidget
 	return Iris.InputText(toParams("InputText", props.Arguments, props.States))
@@ -249,7 +269,9 @@ export type SeparatorTextWidget = BaseWidget & {}
 export type SeparatorTextWidgetProperties = {
 	Arguments: {
 		Text: string,
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.SeparatorText = function(props: SeparatorTextWidgetProperties): SeparatorTextWidget
 	return Iris.SeparatorText(toParams("SeparatorText", props.Arguments))
@@ -264,7 +286,9 @@ export type TextWidgetProperties = {
 		Wrapped: boolean?, -- whether the text will wrap around inside the parent container. If not specified, then equal to the config
 		Color: Color3?, -- the color of the text.
 		RichText: boolean?, -- enable RichText. If not specified, then equal to the config
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.Text = function(props: TextWidgetProperties): TextWidget
 	return Iris.Text(toParams("Text", props.Arguments))
@@ -281,7 +305,9 @@ export type ButtonWidgetProperties = {
 	Arguments: {
 		Text: string,
 		Size: UDim2?,
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.Button = function(props: ButtonWidgetProperties): ButtonWidget
 	return Iris.Button(toParams("Button", props.Arguments))
@@ -302,10 +328,13 @@ export type CheckboxWidget = BaseWidget & {
 export type CheckboxWidgetProperties = {
 	Arguments: {
 		Text: string,
+		[any]: never,
 	},
 	States: {
 		isChecked: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.Checkbox = function(props: CheckboxWidgetProperties): CheckboxWidget
 	return Iris.Checkbox(toParams("Checkbox", props.Arguments, props.States))
@@ -321,10 +350,13 @@ export type RadioButtonProperties<V> = {
 	Arguments: {
 		Text: string,
 		Index: V,
+		[any]: never,
 	},
 	States: {
 		index: State<V>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.RadioButton = function<V>(props: RadioButtonProperties<V>): RadioButtonWidget<V>
 	return Iris.RadioButton(toParams("RadioButton", props.Arguments, props.States))
@@ -341,10 +373,13 @@ export type TreeProperties = {
 		SpanAvailWidth: boolean?, -- the tree title will fill all horizontal space to the end its parent container.
 		NoIndent: boolean?, -- the child widgets will not be indented underneath.
 		DefaultOpen: boolean?, -- initially opens the tree if no state is provided
+		[any]: never,
 	},
 	States: {
 		isUncollapsed: State<boolean>?, -- whether the widget is collapsed.
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.Tree = function(props: TreeProperties, fn: (widget: TreeWidget) -> ()): TreeWidget
 	local widget = Iris.Tree(toParams("Tree", props.Arguments, props.States))
@@ -362,10 +397,13 @@ export type CollapsingHeaderProperties = {
 	Arguments: {
 		Text: string,
 		DefaultOpen: boolean?, -- initially opens the tree if no state is provided
+		[any]: never,
 	},
 	States: {
 		isUncollapsed: State<boolean>?, -- whether the widget is collapsed.
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.CollapsingHeader = function(
 	props: CollapsingHeaderProperties,
@@ -389,7 +427,9 @@ export type TabBarWidget = BaseWidget & {
 export type TabBarWidgetProperties = {
 	States: {
 		index: State<number>?, -- whether the widget is collapsed.
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.TabBar = function(props: TabBarWidgetProperties, fn: (widget: TabBarWidget) -> ()): TabBarWidget
 	local widget = Iris.TabBar(toParams("TabBar", nil, props.States))
@@ -411,10 +451,13 @@ export type TabWidgetProperties = {
 	Arguments: {
 		Text: string,
 		Hideable: boolean?, -- determines whether a tab can be closed/hidden
+		[any]: never,
 	},
 	States: {
 		isOpened: State<boolean>?, -- whether the widget is collapsed.
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.Tab = function(props: TabWidgetProperties): TabWidget
 	return Iris.Tab(toParams("Tab", props.Arguments, props.States))
@@ -433,7 +476,9 @@ export type ImageWidgetProperties = {
 		TileSize: UDim2?, -- only used if the ScaleType is set to Tile
 		SliceCenter: Rect?, -- only used if the ScaleType is set to Slice
 		SliceScale: number?, -- only used if the ScaleType is set to Slice
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.Image = function(props: ImageWidgetProperties): ImageWidget
 	return Iris.Image(toParams("Image", props.Arguments))
@@ -456,7 +501,9 @@ export type ImageButtonWidgetProperties = {
 		TileSize: UDim2?, -- only used if the ScaleType is set to Tile
 		SliceCenter: Rect?, -- only used if the ScaleType is set to Slice
 		SliceScale: number?, -- only used if the ScaleType is set to Slice
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.ImageButton = function(props: ImageButtonWidgetProperties): ImageButtonWidget
 	return Iris.ImageButton(toParams("ImageButton", props.Arguments))
@@ -474,11 +521,14 @@ export type InputNumWidgetProperties = {
 		Max: number?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
 		NoButtons: boolean?, -- whether to display + and - buttons next to the input box.
+		[any]: never,
 	}?,
 	States: {
 		number: State<number>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.InputNum = function(props: InputNumWidgetProperties): InputNumWidget
 	return Iris.InputNum(toParams("InputNum", props.Arguments, props.States))
@@ -495,11 +545,14 @@ export type InputVector2WidgetProperties = {
 		Min: Vector2?,
 		Max: Vector2?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		number: State<Vector2>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.InputVector2 = function(props: InputVector2WidgetProperties): InputVector2Widget
 	return Iris.InputVector2(toParams("InputVector2", props.Arguments, props.States))
@@ -516,10 +569,12 @@ export type InputVector3WidgetProperties = {
 		Min: Vector3?,
 		Max: Vector3?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		number: State<Vector3>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
 }
 Module.Widget.InputVector3 = function(props: InputVector3WidgetProperties): InputVector3Widget
@@ -529,6 +584,7 @@ end
 export type InputUDimWidget = BaseWidget & {
 	numberChanged: () -> boolean,
 	hovered: () -> boolean,
+	[any]: never,
 }
 export type InputUDimWidgetProperties = {
 	Arguments: {
@@ -537,11 +593,14 @@ export type InputUDimWidgetProperties = {
 		Min: UDim?,
 		Max: UDim?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+		[any]: never,
 	}?,
 	States: {
 		number: State<UDim>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.InputUDim = function(props: InputUDimWidgetProperties): InputUDimWidget
 	return Iris.InputUDim(toParams("InputUDim", props.Arguments, props.States))
@@ -558,11 +617,14 @@ export type InputUDim2WidgetProperties = {
 		Min: UDim2?,
 		Max: UDim2?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+		[any]: never,
 	}?,
 	States: {
 		number: State<UDim2>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.InputUDim2 = function(props: InputUDim2WidgetProperties): InputUDim2Widget
 	return Iris.InputUDim2(toParams("InputUDim2", props.Arguments, props.States))
@@ -579,11 +641,14 @@ export type InputRectWidgetProperties = {
 		Min: Rect?,
 		Max: Rect?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		number: State<Rect>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.InputRect = function(props: InputRectWidgetProperties): InputRectWidget
 	return Iris.InputRect(toParams("InputRect", props.Arguments, props.States))
@@ -599,11 +664,14 @@ export type InputColor3WidgetProperties = {
 		UseFloats: boolean?, -- constrain the values between floats 0 and 1 or integers 0 and 255.
 		UseHSV: boolean?, -- input using HSV instead.
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		color: State<Color3>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.InputColor3 = function(props: InputColor3WidgetProperties): InputColor3Widget
 	return Iris.InputColor3(toParams("InputColor3", props.Arguments, props.States))
@@ -619,12 +687,15 @@ export type InputColor4WidgetProperties = {
 		UseFloats: boolean?, -- constrain the values between floats 0 and 1 or integers 0 and 255.
 		UseHSV: boolean?, -- input using HSV instead.
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		color: State<Color3>?,
 		transparency: State<number>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.InputColor4 = function(props: InputColor4WidgetProperties): InputColor4Widget
 	return Iris.InputColor4(toParams("InputColor4", props.Arguments, props.States))
@@ -642,11 +713,14 @@ export type DragNumWidgetProperties = {
 		Max: number?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
 		NoButtons: boolean?, -- whether to display + and - buttons next to the input box.
+		[any]: never,
 	}?,
 	States: {
 		number: State<number>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.DragNum = function(props: DragNumWidgetProperties): DragNumWidget
 	return Iris.DragNum(toParams("DragNum", props.Arguments, props.States))
@@ -663,11 +737,14 @@ export type DragVector2WidgetProperties = {
 		Min: Vector2?,
 		Max: Vector2?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		number: State<Vector2>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.DragVector2 = function(props: DragVector2WidgetProperties): DragVector2Widget
 	return Iris.DragVector2(toParams("DragVector2", props.Arguments, props.States))
@@ -683,11 +760,14 @@ export type DragVector3WidgetProperties = {
 		Min: Vector3?,
 		Max: Vector3?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		number: State<Vector3>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.DragVector3 = function(props: DragVector3WidgetProperties): DragVector3Widget
 	return Iris.DragVector3(toParams("DragVector3", props.Arguments, props.States))
@@ -704,11 +784,14 @@ export type DragUDimWidgetProperties = {
 		Min: UDim?,
 		Max: UDim?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+		[any]: never,
 	}?,
 	States: {
 		number: State<UDim>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.DragUDim = function(props: DragUDimWidgetProperties): DragUDimWidget
 	return Iris.DragUDim(toParams("DragUDim", props.Arguments, props.States))
@@ -725,11 +808,14 @@ export type DragUDim2WidgetProperties = {
 		Min: UDim2?,
 		Max: UDim2?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+		[any]: never,
 	}?,
 	States: {
 		number: State<UDim2>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.DragUDim2 = function(props: DragUDim2WidgetProperties): DragUDim2Widget
 	return Iris.DragUDim2(toParams("DragUDim2", props.Arguments, props.States))
@@ -746,11 +832,14 @@ export type DragRectWidgetProperties = {
 		Min: Rect?,
 		Max: Rect?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		number: State<Rect>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.DragRect = function(props: DragRectWidgetProperties): DragRectWidget
 	return Iris.DragRect(toParams("DragRect", props.Arguments, props.States))
@@ -768,11 +857,14 @@ export type SliderNumWidgetProperties = {
 		Max: number?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
 		NoButtons: boolean?, -- whether to display + and - buttons next to the input box.
+		[any]: never,
 	}?,
 	States: {
 		number: State<number>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.SliderNum = function(props: SliderNumWidgetProperties): SliderNumWidget
 	return Iris.SliderNum(toParams("SliderNum", props.Arguments, props.States))
@@ -788,11 +880,14 @@ export type SliderVector2WidgetProperties = {
 		Min: Vector2?,
 		Max: Vector2?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		number: State<Vector2>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.SliderVector2 = function(props: SliderVector2WidgetProperties): SliderVector2Widget
 	return Iris.SliderVector2(toParams("SliderVector2", props.Arguments, props.States))
@@ -809,11 +904,14 @@ export type SliderVector3WidgetProperties = {
 		Min: Vector3?,
 		Max: Vector3?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		number: State<Vector3>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.SliderVector3 = function(props: SliderVector3WidgetProperties): SliderVector3Widget
 	return Iris.SliderVector3(toParams("SliderVector3", props.Arguments, props.States))
@@ -830,11 +928,14 @@ export type SliderUDimWidgetProperties = {
 		Min: UDim?,
 		Max: UDim?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+		[any]: never,
 	}?,
 	States: {
 		number: State<UDim>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.SliderUDim = function(props: SliderUDimWidgetProperties): SliderUDimWidget
 	return Iris.SliderUDim(toParams("SliderUDim", props.Arguments, props.States))
@@ -851,11 +952,14 @@ export type SliderUDim2WidgetProperties = {
 		Min: UDim2?,
 		Max: UDim2?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format
+		[any]: never,
 	}?,
 	States: {
 		number: State<UDim2>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.SliderUDim2 = function(props: SliderUDim2WidgetProperties): SliderUDim2Widget
 	return Iris.SliderUDim2(toParams("SliderUDim2", props.Arguments, props.States))
@@ -872,11 +976,14 @@ export type SliderRectWidgetProperties = {
 		Min: Rect?,
 		Max: Rect?,
 		Format: string? | { string }?, -- Iris will dynamically generate an approriate format.
+		[any]: never,
 	}?,
 	States: {
 		number: State<Rect>?,
 		editingText: State<boolean>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.SliderRect = function(props: SliderRectWidgetProperties): SliderRectWidget
 	return Iris.SliderRect(toParams("SliderRect", props.Arguments, props.States))
@@ -897,10 +1004,13 @@ export type SelectableWidgetProperties<V> = {
 		Text: string,
 		Index: V, -- index of selectable value.
 		NoClick: boolean?, -- prevents the selectable from being clicked by the user.
+		[any]: never,
 	},
 	States: {
 		index: State<V>, -- a shared state between all selectables.
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.Selectable = function<V>(props: SelectableWidgetProperties<V>): SelectableWidget
 	return Iris.Selectable(toParams("Selectable", props.Arguments, props.States))
@@ -918,11 +1028,14 @@ export type ComboWidgetProperties = {
 		Text: string,
 		NoButton: boolean?, -- hide the dropdown button.
 		NoPreview: boolean?, -- hide the preview field.
+		[any]: never,
 	},
 	States: {
 		index: State<any>,
 		isOpened: State<boolean>?,
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.Combo = function(props: ComboWidgetProperties, fn: (widget: ComboWidget) -> ()): ComboWidget
 	local widget = Iris.Combo(toParams("Combo", props.Arguments, props.States))
@@ -942,14 +1055,18 @@ export type ComboArrayWidgetProperties<V> = {
 		Text: string,
 		NoButton: boolean?, -- hide the dropdown button.
 		NoPreview: boolean?, -- hide the preview field.
+		[any]: never,
 	},
 	States: {
 		index: State<V>,
 		isOpened: State<boolean>?,
+		[any]: never,
 	},
 	Extra: {
 		selectionArray: { V }, -- the array to generate a combo from.
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.ComboArray = function<V>(
 	props: ComboArrayWidgetProperties<V>,
@@ -972,14 +1089,18 @@ export type ComboEnumWidgetProperties = {
 		Text: string,
 		NoButton: boolean?, -- hide the dropdown button.
 		NoPreview: boolean?, -- hide the preview field.
+		[any]: never,
 	},
 	States: {
 		index: State<EnumItem>,
 		isOpened: State<boolean>?,
+		[any]: never,
 	},
 	Extra: {
 		enumType: Enum, -- the array to generate a combo from.
+		[any]: never,
 	},
+	[any]: never,
 }
 Module.Widget.ComboEnum = function(
 	props: ComboEnumWidgetProperties,
@@ -994,15 +1115,19 @@ end
 export type ProgressBarWidget = BaseWidget & {
 	hovered: () -> boolean,
 	changed: () -> boolean,
+	[any]: never,
 }
 export type ProgressBarWidgetProperties = {
 	Arguments: {
 		Text: string?,
 		Format: string?, -- optional to override with a custom progress such as `29/54`
+		[any]: never,
 	}?,
 	States: {
 		progress: State<number>?,
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.ProgressBar = function(props: ProgressBarWidgetProperties): ProgressBarWidget
 	return Iris.ProgressBar(toParams("ProgressBar", props.Arguments, props.States))
@@ -1018,11 +1143,14 @@ export type PlotLinesWidgetProperties = {
 		Min: number?, -- Iris will use the minimum value from the values
 		Max: number?, -- Iris will use the maximum value from the values
 		TextOverlay: string?,
+		[any]: never,
 	}?,
 	States: {
 		values: State<{ number }>?,
 		hovered: State<{ number }>?, -- read-only property
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.PlotLines = function(props: PlotLinesWidgetProperties): PlotLinesWidget
 	return Iris.PlotLines(toParams("PlotLines", props.Arguments, props.States))
@@ -1039,11 +1167,14 @@ export type PlotHistogramWidgetProperties = {
 		Max: number?, -- Iris will use the maximum value from the values
 		TextOverlay: string?,
 		BaseLine: number?, -- by default, blocks swap side at 0
+		[any]: never,
 	}?,
 	States: {
 		values: State<{ number }>?,
 		hovered: State<{ number }>?, -- read-only property
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.PlotHistogram = function(props: PlotHistogramWidgetProperties): PlotHistogramWidget
 	return Iris.PlotHistogram(toParams("PlotHistogram", props.Arguments, props.States))
@@ -1070,10 +1201,13 @@ export type TableWidgetProperties = {
 		FixedWidth: boolean?, -- columns takes up a fixed pixel width, rather than a proportion of the total available
 		ProportionalWidth: boolean?, -- minimises the width of each column individually
 		LimitTableWidth: boolean?, -- when a fixed width, cut of any unused space
+		[any]: never,
 	},
 	States: {
 		widths: State<{ number }>?, -- the widths of each column if Resizable
+		[any]: never,
 	}?,
+	[any]: never,
 }
 Module.Widget.Table = function(props: TableWidgetProperties, fn: (widget: TableWidget) -> ()): TableWidget
 	local widget = Iris.Table(toParams("Table", props.Arguments, props.States))

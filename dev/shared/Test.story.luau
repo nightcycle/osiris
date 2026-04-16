@@ -19,7 +19,7 @@ return function(frame: Frame)
 				Arguments = {
 					Title = "Abc123",
 				},
-				State = {
+				States = {
 					isOpened = isOpenState,
 				},
 			}, function(_)
