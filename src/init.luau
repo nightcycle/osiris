@@ -4,7 +4,20 @@
 local Iris = require(script.Parent.Iris)
 -- Modules
 -- Types
-export type State<V> = typeof(Iris.State((nil :: any) :: V))
+export type State<T> = {
+	ID: string,
+	value: T,
+	lastChangeTick: number,
+	ConnectedWidgets: { [string]: BaseWidget },
+	ConnectedFunctions: { (newValue: T) -> () },
+
+	get: (self: State<T>) -> T,
+	set: (self: State<T>, newValue: T, force: true?) -> (),
+	onChange: (self: State<T>, funcToConnect: (newValue: T) -> ()) -> () -> (),
+	changed: (self: State<T>) -> boolean,
+	[any]: never,
+}
+
 type BaseWidget = {
 	ID: string,
 	type: string,
@@ -51,7 +64,6 @@ function Module:Connect(callback: () -> ()): () -> ()
 end
 
 Module.Append = Iris.Append
-Module.ComputedState = Iris.ComputedState
 Module.ForceRefresh = Iris.ForceRefresh
 Module.Init = Iris.Init
 Module.PopConfig = Iris.PopConfig
@@ -62,11 +74,22 @@ Module.SetFocusedWindow = Iris.SetFocusedWindow
 Module.SetNextWidgetID = Iris.SetNextWidgetID
 Module.ShowDemoWindow = Iris.ShowDemoWindow
 Module.Shutdown = Iris.Shutdown
-Module.State = Iris.State
-Module.TableState = Iris.TableState
+Module.State = function<V>(v: V): State<V>
+	return Iris.State(v)
+end
+Module.WeakState = function<V>(v: V): State<V>
+	return Iris.WeakState(v)
+end
+Module.VariableState = function<V, T>(v: V, callback: (T) -> ()): State<T>
+	return Iris.VariableState(v, callback)
+end
+Module.TableState = function<K, V>(tab: { [K]: V }, key: K, callback: ((newValue: V) -> true?)?): State<V>
+	return Iris.TableState(tab, key, callback)
+end
+Module.ComputedState = function<T, U>(firstState: State<T>, onChangeCallback: (firstValue: T) -> U): State<U>
+	return Iris.ComputedState(firstState, onChangeCallback)
+end
 Module.UpdateGlobalConfig = Iris.UpdateGlobalConfig
-Module.VariableState = Iris.VariableState
-Module.WeakState = Iris.WeakState
 
 Module.Widget = {}
 
