@@ -18,7 +18,7 @@ export type State<T> = {
 	[any]: never,
 }
 
-type BaseWidget = {
+export type BaseWidget = {
 	ID: string,
 	type: string,
 	lastCycleTick: number,
