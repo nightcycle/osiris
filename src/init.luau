@@ -482,8 +482,11 @@ export type TabWidgetProperties = {
 	}?,
 	[any]: never,
 }
-Module.Widget.Tab = function(props: TabWidgetProperties): TabWidget
-	return Iris.Tab(toParams("Tab", props.Arguments, props.States))
+Module.Widget.Tab = function(props: TabWidgetProperties, fn: (TabWidget) -> ()): TabWidget
+	local widget = Iris.Tab(toParams("Tab", props.Arguments, props.States))
+	fn(widget)
+	Iris.End()
+	return widget
 end
 
 export type ImageWidget = BaseWidget & {
