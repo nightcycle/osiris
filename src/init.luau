@@ -1059,10 +1059,8 @@ export type ComboWidgetProperties = {
 	},
 	[any]: never,
 }
-Module.Widget.Combo = function(props: ComboWidgetProperties, fn: (widget: ComboWidget) -> ()): ComboWidget
+Module.Widget.Combo = function(props: ComboWidgetProperties): ComboWidget
 	local widget = Iris.Combo(toParams("Combo", props.Arguments, props.States))
-	fn(widget)
-	Iris.End()
 	return widget
 end
 
@@ -1091,12 +1089,9 @@ export type ComboArrayWidgetProperties<V> = {
 	[any]: never,
 }
 Module.Widget.ComboArray = function<V>(
-	props: ComboArrayWidgetProperties<V>,
-	fn: (widget: ComboArrayWidget) -> ()
+	props: ComboArrayWidgetProperties<V>
 ): ComboArrayWidget
 	local widget = Iris.ComboArray(toParams("Combo", props.Arguments, props.States, props.Extra.selectionArray))
-	fn(widget)
-	Iris.End()
 	return widget
 end
 
@@ -1125,12 +1120,9 @@ export type ComboEnumWidgetProperties = {
 	[any]: never,
 }
 Module.Widget.ComboEnum = function(
-	props: ComboEnumWidgetProperties,
-	fn: (widget: ComboEnumWidget) -> ()
+	props: ComboEnumWidgetProperties
 ): ComboEnumWidget
 	local widget = Iris.ComboEnum(toParams("Combo", props.Arguments, props.States, props.Extra.enumType))
-	fn(widget)
-	Iris.End()
 	return widget
 end
 
