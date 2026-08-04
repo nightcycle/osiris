@@ -31,11 +31,7 @@ export type BaseWidget = {
 -- Variables
 -- References
 -- Private Functions
-function toParams(
-	key: string,
-	args: { [string]: any? }?,
-	states: { [string]: State<any>? }?
-): ({ any }, { [any]: any }?)
+function toParams(key: string, args: any?, states: any?, ...): ({ any }, { [any]: any }?)
 	local outArgs: { [any]: any } = {}
 	if args then
 		assert(Iris.Args[key], `bad args for "{key}"`)
@@ -51,7 +47,7 @@ function toParams(
 			stateCount += 1
 		end
 	end
-	return outArgs, if stateCount > 0 then outStates else nil
+	return outArgs, if stateCount > 0 then outStates else nil, ...
 end
 -- Class
 local Module = {}
@@ -1098,7 +1094,7 @@ Module.Widget.ComboArray = function<V>(
 	props: ComboArrayWidgetProperties<V>,
 	fn: (widget: ComboArrayWidget) -> ()
 ): ComboArrayWidget
-	local widget = Iris.ComboArray(toParams("ComboArray", props.Arguments, props.States), props.Extra.selectionArray)
+	local widget = Iris.ComboArray(toParams("Combo", props.Arguments, props.States, props.Extra.selectionArray))
 	fn(widget)
 	Iris.End()
 	return widget
@@ -1132,7 +1128,7 @@ Module.Widget.ComboEnum = function(
 	props: ComboEnumWidgetProperties,
 	fn: (widget: ComboEnumWidget) -> ()
 ): ComboEnumWidget
-	local widget = Iris.ComboEnum(toParams("ComboEnum", props.Arguments, props.States), props.Extra.enumType)
+	local widget = Iris.ComboEnum(toParams("Combo", props.Arguments, props.States, props.Extra.enumType))
 	fn(widget)
 	Iris.End()
 	return widget
