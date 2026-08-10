@@ -1236,7 +1236,7 @@ Module.Widget.Table = function(props: TableWidgetProperties, fn: (widget: TableW
 		NextRow = Iris.NextRow,
 		SetColumIndex = Iris.SetColumnIndex,
 		SetRowIndex = Iris.SetRowIndex,
-		NextHeaderColumn = Iris.NextHeaderColumn(),
+		NextHeaderColumn = Iris.NextHeaderColumn,
 		SetHeaderColumnIndex = Iris.SetHeaderColumnIndex,
 		SetColumnWidth = Iris.SetColumnWidth,
 	}
