@@ -1088,9 +1088,7 @@ export type ComboArrayWidgetProperties<V> = {
 	},
 	[any]: never,
 }
-Module.Widget.ComboArray = function<V>(
-	props: ComboArrayWidgetProperties<V>
-): ComboArrayWidget
+Module.Widget.ComboArray = function<V>(props: ComboArrayWidgetProperties<V>): ComboArrayWidget
 	local widget = Iris.ComboArray(toParams("Combo", props.Arguments, props.States, props.Extra.selectionArray))
 	return widget
 end
@@ -1119,9 +1117,7 @@ export type ComboEnumWidgetProperties = {
 	},
 	[any]: never,
 }
-Module.Widget.ComboEnum = function(
-	props: ComboEnumWidgetProperties
-): ComboEnumWidget
+Module.Widget.ComboEnum = function(props: ComboEnumWidgetProperties): ComboEnumWidget
 	local widget = Iris.ComboEnum(toParams("Combo", props.Arguments, props.States, props.Extra.enumType))
 	return widget
 end
@@ -1227,7 +1223,23 @@ Module.Widget.Table = function(props: TableWidgetProperties, fn: (widget: TableW
 	local widget = Iris.Table(toParams("Table", props.Arguments, props.States))
 	fn(widget)
 	Iris.End()
-	return widget
+	return {
+		ID = widget.ID,
+		type = widget["type"],
+		lastCycleTick = widget.lastCycleTick,
+		parentWidget = widget.parentWidget,
+		Instance = widget.Instance,
+		ZIndex = widget.ZIndex,
+		arguments = widget.arguments,
+		hovered = widget.hovered,
+		NextColumn = Iris.NextColumn,
+		NextRow = Iris.NextRow,
+		SetColumIndex = Iris.SetColumnIndex,
+		SetRowIndex = Iris.SetRowIndex,
+		NextHeaderColumn = Iris.NextHeaderColumn(),
+		SetHeaderColumnIndex = Iris.SetHeaderColumnIndex,
+		SetColumnWidth = Iris.SetColumnWidth,
+	}
 end
 
 setmetatable(Module, {
