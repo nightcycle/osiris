@@ -1221,9 +1221,7 @@ export type TableWidgetProperties = {
 }
 Module.Widget.Table = function(props: TableWidgetProperties, fn: (widget: TableWidget) -> ()): TableWidget
 	local widget = Iris.Table(toParams("Table", props.Arguments, props.States))
-	fn(widget)
-	Iris.End()
-	return {
+	local advWidget = {
 		ID = widget.ID,
 		type = widget["type"],
 		lastCycleTick = widget.lastCycleTick,
@@ -1240,6 +1238,9 @@ Module.Widget.Table = function(props: TableWidgetProperties, fn: (widget: TableW
 		SetHeaderColumnIndex = Iris.SetHeaderColumnIndex,
 		SetColumnWidth = Iris.SetColumnWidth,
 	}
+	fn(advWidget)
+	Iris.End()
+	return advWidget
 end
 
 setmetatable(Module, {
