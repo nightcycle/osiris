@@ -54,6 +54,7 @@ local Module = {}
 
 Module.Disabled = Iris.Disabled
 Module.TemplateConfig = Iris.TemplateConfig
+Module.Internal = Iris.Internal
 
 function Module:Connect(callback: () -> ()): () -> ()
 	return Iris:Connect(callback)
